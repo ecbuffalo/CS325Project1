@@ -1,10 +1,41 @@
 #!/usr/bin/env python
 
 import sys
+import os.path
+import random
 
 
 def main():
-    arg_file = sys.argv[1]
+    if len(sys.argv) == 2:
+        first_arg = sys.argv[1]
+        if os.path.isfile(first_arg):
+            process_input_file(first_arg)
+        else:
+            try:
+                test_num = int(first_arg)
+                process_test_run(test_num)
+            except ValueError:
+                print "File does not exist or not valid integer to test with"
+    else:
+        print "Incorrect number of arguments. Only pass in 1 argument"
+
+
+def process_test_run(test_run_number):
+    i = 0
+    test_array = []
+    while i < test_run_number:
+        val = random.randint(-100,100)
+        test_array.append(val)
+        i += 1
+
+    print "Finding max sum using Algorithm 1"
+    find_max_sum_enumeration(test_array)
+
+    print "Finding max sum using Algorithm 2"
+    find_max_sum_better_enumeration(test_array)
+
+
+def process_input_file(arg_file):
     process_file_for_enumeration(arg_file)
     process_file_for_better_enumeration(arg_file)
 
