@@ -117,5 +117,27 @@ def find_max_sum_better_enumeration(numbers):
     print max_sum
     print ''
 
+#Linear time algorithm
+def algo4(arr):
+    low_index = 0;
+    high_index = 0;
+    sub_sum = arr[0];
+    max_sum = 0;
 
+    for i in range(0,len(arr)-1):
+        if(sub_sum + arr[i+1] > arr[i+1]):
+            sub_sum += arr[i+1];
+            if(sub_sum > max_sum):
+                max_sum = sub_sum;
+                high_index = i+1;
+        else:
+            sub_sum = arr[i+1];
+            if(sub_sum > max_sum):
+                max_sum = sub_sum;
+                low_index = i+1;
+                high_index = i+1;
+    max_subarray = arr[low_index:(high_index+1)];
+    print(arr);
+    print(max_subarray);
+    print(max_sum);
 main()
