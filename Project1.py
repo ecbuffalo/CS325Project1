@@ -117,6 +117,62 @@ def find_max_sum_better_enumeration(numbers):
     print max_sum
     print ''
 
+# Algorithm 3
+def find_max_cross(numbers, low, mid, high):
+    """
+    Find the max sub-array that crosses the midpoint of an array. Code is based
+    off the pseudocode in the textbook 'Introduction to Algorithms Third Edition'
+    by Thomas Cormen, Charles Leiserson, Ronald Rivest, and Clifford Stein. It is
+    located on page 71.
+
+    numbers: The input list to comput the max crossing sub array for.
+    low: The starting index
+    mid: The middle index of numbers
+    high: The last index of numbers
+    """
+    left_sum = float('-inf')
+    temp_sum = 0
+    max_left = mid
+    max_right = mid + 1
+    for i in range(mid, low, -1):
+        temp_sum += numbers[i]
+        if temp_sum > left_sum:
+            left_sum = temp_sum
+            max_left = i
+    right_sum = ('-inf')
+    temp_sum = 0
+    for j in range(mid + 1, high + 1):
+        sum += numbers[j]
+        if temp_sum > right_sum:
+            right_sum = temp_sum
+            max_right = j
+    return max_left, max_right, left_sum + right_sum
+
+def divide_and_conquer(numbers, low, high):
+    """
+    Find the max sub-array of an array including its indices and value. Code is based
+    off the pseudocode in the textbook 'Introduction to Algorithms Third Edition' by Thomas Cormen, Charles Leiserson,
+    Ronald Rivest, and Clifford Stein. It is located on page 72.
+
+
+    numbers: The input list to compute the maximum subarray for.
+    low: The starting index of numbers
+    high: The ending index of numbers
+    """
+    if low == high:
+        return low, high, numbers[low]
+    else:
+        mid = (low + high) / 2
+        left_low, left_high, left_sum = divide_and_conquer(numbers, low, mid)
+        right_low, right_high, right_sum = divide_and_conquer(numbers, mid + 1, high)
+        cross_low, cross_high, cross_sum = find_max_cross(numbers, low, mid, high)
+        if left_sum >= right_sum and left_sum >= cross_sum:
+            return left_low, left_high, left_sum
+        elif right_sum >= left_sum and right_sum >= cross_sum:
+            return right_low, right_high, right_sum
+        else:
+            return cross_low, cross_high, cross_sum
+
 #Linear time algorithm
 def algo4(arr):
     low_index = 0;
